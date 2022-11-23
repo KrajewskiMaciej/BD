@@ -1,0 +1,33 @@
+Zadanie 1.
+a)DELETE FROM postacie WHERE rodzaj='wiking' AND NOT nazwa='Bjorn' ORDER BY wiek DESC LIMIT 2;
+
+b)ALTER TABLE przetwory DROP FOREIGN KEY przetwory_ibfk_1;
+ALTER TABLE przetwory DROP FOREIGN KEY przetwory_ibfk_2;
+ALTER TABEL walizka DROP FOREIGN KEY walizka_ibfk_1
+ALTER TABEL postacie MODIFY id INT NOT NULL;
+ALTER TABLE postacie DROP PRIMARY KEY;
+
+Zadanie 2.
+a)ALTER TABLE postacie ADD pesel INT(11);
+ALTER TABLE postacie ADD PRIMARY KEY(PESEL);
+b)ALTER TABLE postacie MODIFY rodzaj ENUM ('wiking', 'ptak', 'kobieta', 'syrena');
+c)INSTER INTO postacie(nazwa, rodzaj) VALUES("Gertruda Nieszczera", '4');
+
+Zadanie 3.
+a)UPDATE postacie SET statek="Wielka Tesciowa" WHERE nazwa LIKE '%a%' AND rodzaj=1;
+b)UPDATE statek SET max_ladownosc=max_ladownosc-(max_ladownosc*0.30) WHERE data_wodowania BETWEEN '1901-01-01' AND '2000-12-31';
+c)SELECT nazwa, CASE WHEN wiek>1000 THEN 'Wiecej niz 1000 lat' WHEN wiek<1000 THEN 'Mniej niz 1000 lat' END as wynik FROM postacie;
+
+Zadanie 4.
+a)INSERT INTO postacie(nazwa) VALUES('Loko');
+b)CREATE TABEL marynarz LIKE postacie;
+INSERT INTO marynarz(SELECT * FROM postacie WHERE statek IS NOT NULL);
+c)ALTER TABLE marynarz ADD FOREIGN KEY(statek) REFERENCES statek (nazwa_statku);
+
+Zadanie 5.
+a)UPDATE marynarz SET statek='' WHERE statek=Wielka Tesciowa';
+b)DELETE FROM marynarz WHERE statek='' AND NOT nazwa='Bjorn' ORDER BY wiek DESC LIMIT 1;
+c)DELETE FROM statek;
+d)DROP TABLE statek;
+e)CREATE TABLE zwierz(id INT PRIMARY KEY AUTO_INCREMENT, nazwa VARCHAR(50), wiek INT);
+f)INSERT INTO zwierz(nazwa,wiek) (SELECT nazwa, wiek FROM postacie WHERE rodzaj='ptak' OR nazwa='Loko');
