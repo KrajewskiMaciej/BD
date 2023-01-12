@@ -1,0 +1,24 @@
+Zadanie 1.
+a) INSERT INTO krajewskim.kreatura SELECT * FROM wikingowie.kreatura;
+CREATE TABLE uczestnicy AS(SELECT * FROM wikingowie.uczestnicy);
+CREATE TABLE etapy_wyprawy AS(SELECT * FROM wikingowie.etapy_wyprawy);
+CREATE TABLE sektor AS(SELECT * FROM wikingowie.sektor);
+CREATE TABLE wyprawa AS(SELECT * FROM wikingowie.wyprawa);
+b)SELECT idKreatury, nazwa FROM kreatura WHERE kreatura.idKreatury NOT IN (SELECT id_uczestnika FROM uczestnicy
+WHERE id_uczestnika IS NOT NULL);
+c)SELECT nazwa, SUM(ilosc) FROM wyprawa LEFT JOIN uczestnicy ON wyprawa.id_wyprawy=uczestnicy.id_wyprawy INNER JOIN ekwipunek ON ekwipunek.idKreatury=uczestnicy.id_uczestnika GROUP BY nazwa;
+
+Zadanie 2.
+a) SELECT wyprawa.nazwa, COUNT(uczestnicy.id_uczestnika), GROUP_CONCAT(kreatura.nazwa) FROM uczestnicy JOIN wyprawa ON wyprawa.id_wyprawy = uczestnicy.id_wyprawy JOIN kreatura ON uczestnicy.id_uczestnika = kreatura.idKreatury GROUP BY wyprawa.nazwa;
+b)SELECT etapy_wyprawy.kolejnosc, sektor.nazwa AS nazwa_sektora, wyprawa.nazwa AS nazwa_wyprawy, kreatura.nazwa AS kierownik_wyprawy FROM etapy_wyprawy INNER JOIN sektor ON etapy_wyprawy.sektor=sektor.id_sektora INNER JOIN wyprawa ON etapy_wyprawy.idWyprawy = wyprawa.id_wyprawy INNER JOIN kreatura ON wyprawa.kierownik = kreatura.idKreatury ORDER BY wyprawa.data_rozpoczecia, etapy_wyprawy.kolejnosc;
+
+Zadanie 3.
+a)SELECT sektor.nazwa AS nazwa_sektora, COUNT(etapy_wyprawy.sektor) AS ilosc_odwiedzin FROM sektor LEFT JOIN etapy_wyprawy ON etapy_wyprawy.sektor = sektor.id_sektora  GROUP BY sektor.nazwa;
+b)SELECT kreatura.nazwa, IF(COUNT(uczestnicy.id_wyprawy)=0, "Nie bral udzialu w wyprawie", "Bral udzial w wyprawie") AS Wyprawa FROM uczestnicy RIGHT JOIN kreatura ON kreatura.idKreatury = uczestnicy.id_uczestnika GROUP BY kreatura.nazwa;
+
+Zadanie 4.
+a)SELECT wyprawa.nazwa, SUM(LENGTH(etapy_wyprawy.dziennik)) AS liczbaZnakow FROM etapy_wyprawy JOIN wyprawa ON wyprawa.id_wyprawy=etapy_wyprawy.idWyprawy GROUP BY wyprawa.nazwa HAVING SUM(LENGTH(etapy_wyprawy.dziennik))<400;
+b)SELECT wyprawa.nazwa, COUNT(uczestnicy.id_uczestnika) AS ilosc_uczestnikow, SUM(zasob.waga * zasob.ilosc) / COUNT(uczestnicy.id_uczestnika) AS srednia_waga_zasobow FROM zasob INNER JOIN ekwipunek ON ekwipunek.idZasobu = zasob.idZasobu INNER JOIN kreatura ON kreatura.idKreatury = ekwipunek.idKreatury INNER JOIN uczestnicy ON uczestnicy.id_uczestnika = kreatura.idKreatury INNER JOIN wyprawa ON wyprawa.id_wyprawy = uczestnicy.id_wyprawy GROUP BY wyprawa.nazwa;
+
+Zadanie 5.
+a)SELECT kreatura.nazwa, DATEDIFF(wyprawa.data_rozpoczecia, kreatura.dataUr) AS Wiek_w_dniach FROM uczestnicy JOIN wyprawa ON wyprawa.id_wyprawy = uczestnicy.id_wyprawy JOIN kreatura ON kreatura.idKreatury = uczestnicy.id_uczestnika JOIN etapy_wyprawy ON etapy_wyprawy.idWyprawy =wyprawa.id_wyprawy JOIN sektor ON etapy_wyprawy.sektor = sektor.id_sektora WHERE sektor.nazwa = "Chatka dziadka";
