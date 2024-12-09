@@ -1,12 +1,12 @@
 # Zadanie 1.
 1.
-2. ``` MySQL
+   ``` MySQL
    CREATE TABLE postacie(id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,nazwa VARCHAR(40),rodzaj ENUM('wiking','ptak','kobieta'),data_ur DATE,wiek INTEGER UNSIGNED);
    ```
-3. INSERT INTO postacie VALUES ('1', 'Bjorn', 'wiking', '1995.02.12', '27');
+2. INSERT INTO postacie VALUES ('1', 'Bjorn', 'wiking', '1995.02.12', '27');
    INSERT INTO postacie VALUES ('2', 'Drozd', 'ptak', '2019.07.23', '3');
    INSERT INTO postacie VALUES ('3', 'Tesciowa', 'kobieta', '1952.05.27', '70');
-4. UPDATE postacie SET data_ur='1934.05.27', wiek='88' WHERE nazwa='Tesciowa';
+3. UPDATE postacie SET data_ur='1934.05.27', wiek='88' WHERE nazwa='Tesciowa';
 
 Zadanie 2.
 1. CREATE TABLE walizka(id_walizki INTEGER NOT NULL AUTO_INCREMENT UNIQUE,pojemnosc INT(10) UNSIGNED,kolor ENUM('rozowy','czerwony','teczowy','zolty'),id_wlasciciela INT);
