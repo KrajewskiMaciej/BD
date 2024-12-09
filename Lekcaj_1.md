@@ -1,4 +1,4 @@
-##Zadanie 1.
+## Zadanie 1.
 1. CREATE TABLE postacie(id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,nazwa VARCHAR(40),rodzaj ENUM('wiking','ptak','kobieta'),data_ur DATE,wiek INTEGER UNSIGNED);
 2. INSERT INTO postacie VALUES ('1', 'Bjorn', 'wiking', '1995.02.12', '27');
    INSERT INTO postacie VALUES ('2', 'Drozd', 'ptak', '2019.07.23', '3');
